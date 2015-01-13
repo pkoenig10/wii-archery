@@ -1,4 +1,4 @@
-package game.states;
+package game.state;
 
 import game.Game;
 import game.GameStats;
@@ -78,7 +78,7 @@ public class GameRunningState extends AbstractAppState {
     private static final float TARGET_SIZE = 1.5f;
     private static final float TARGET_SPEED = 20;
 
-    private static final int GAME_TIME = 60;
+    private static final int GAME_TIME = 30;
     private static final float START_DELAY = 1;
     private static final float END_DELAY = 1.5f;
 

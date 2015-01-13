@@ -1,4 +1,4 @@
-package game.states;
+package game.state;
 
 import game.Game;
 import game.GameMoteFinder;
@@ -222,13 +222,11 @@ public class MoteFinderScreenState extends AbstractAppState implements
                 try {
                     GameMoteFinder finder = new GameMoteFinder();
                     mote = finder.findMote();
-                    if (mote == null) {
-                        game.stop();
-                        return;
+                    if (mote != null) {
+                        mote.addExtensionListener(MoteFinderScreenState.this);
+                        mote.addCoreButtonListener(MoteFinderScreenState.this);
+                        mote.activateMotionPlusNunchuk();
                     }
-                    mote.addExtensionListener(MoteFinderScreenState.this);
-                    mote.addCoreButtonListener(MoteFinderScreenState.this);
-                    mote.activateMotionPlusNunchuk();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     game.stop();
