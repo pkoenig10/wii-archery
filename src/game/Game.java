@@ -3,10 +3,10 @@ package game;
 import game.controller.GameController;
 import game.controller.ShootState;
 import game.mesh.FloorQuad;
-import game.states.GameRunningState;
-import game.states.MoteFinderScreenState;
-import game.states.ScoreScreenState;
-import game.states.StartScreenState;
+import game.state.GameRunningState;
+import game.state.MoteFinderScreenState;
+import game.state.ScoreScreenState;
+import game.state.StartScreenState;
 import tonegod.gui.core.Screen;
 
 import com.jme3.app.SimpleApplication;
@@ -16,6 +16,9 @@ import com.jme3.collision.CollisionResults;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.effect.ParticleMesh;
 import com.jme3.font.BitmapFont;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
@@ -116,6 +119,9 @@ public class Game extends SimpleApplication {
         gameRunningState = new GameRunningState(this);
         scoreScreenState = new ScoreScreenState(this);
 
+        inputManager.addMapping("Action", new KeyTrigger(KeyInput.KEY_SPACE));
+        inputManager.addListener(actionListener, "Action");
+
         rootNode.attachChild(targetNode);
 
         doMoteFinder();
@@ -128,10 +134,33 @@ public class Game extends SimpleApplication {
                     .getWidth()) / (2 * ROLL_MAX));
             crosshairY = (float) (((-controller.getPitchVal() + PITCH_MAX) * settings
                     .getHeight()) / (2 * PITCH_MAX));
-            crosshair.setPosition(crosshairX - CROSSHAIR_SIZE / 2, crosshairY
-                    - CROSSHAIR_SIZE / 2);
+        } else {
+            Vector2f cursorPosition = inputManager.getCursorPosition();
+            crosshairX = cursorPosition.getX();
+            crosshairY = cursorPosition.getY();
         }
+        crosshair.setPosition(crosshairX - CROSSHAIR_SIZE / 2, crosshairY
+                - CROSSHAIR_SIZE / 2);
     }
+
+    private ActionListener actionListener = new ActionListener() {
+        @Override
+        public void onAction(String name, boolean keyPressed, float tpf) {
+            if (name.equals("Action") && !keyPressed) {
+                switch (state) {
+                case MOTE_FINDER:
+                    doStart();
+                    break;
+                case START:
+                case GAME:
+                    shoot();
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+    };
 
     private void initCamera() {
         flyCam.setEnabled(false);
@@ -389,19 +418,16 @@ public class Game extends SimpleApplication {
     }
 
     public void doMoteFinder() {
-        stateManager.detach(startScreenState);
-        crosshairNode.removeFromParent();
         stateManager.attach(moteFinderScreenState);
         state = State.MOTE_FINDER;
     }
 
     public void doStart() {
         roomNode.removeFromParent();
+        guiNode.attachChild(crosshairNode);
         stateManager.detach(moteFinderScreenState);
-        stateManager.detach(gameRunningState);
         stateManager.detach(scoreScreenState);
         stateManager.attach(startScreenState);
-        guiNode.attachChild(crosshairNode);
         state = State.START;
     }
 
@@ -414,6 +440,7 @@ public class Game extends SimpleApplication {
 
     public void doScore() {
         crosshairNode.removeFromParent();
+        stateManager.detach(gameRunningState);
         stateManager.attach(scoreScreenState);
         state = State.SCORE;
     }
