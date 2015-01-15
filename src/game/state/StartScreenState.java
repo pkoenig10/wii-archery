@@ -27,11 +27,16 @@ import com.jme3.system.AppSettings;
 public class StartScreenState extends AbstractAppState {
 
     private static final ColorRGBA BACKGROUND_COLOR = ColorRGBA.DarkGray;
+    private static final ColorRGBA START_TITLE_COLOR = ColorRGBA.White;
     private static final ColorRGBA START_COLOR = ColorRGBA.White;
     private static final ColorRGBA START_BUTTON_COLOR = ColorRGBA.Black;
 
+    private static final float START_TITLE_FONT_SIZE = 75;
     private static final float START_FONT_SIZE = 50;
     private static final float START_BUTTON_FONT_SIZE = 75;
+
+    private static final float START_TITLE_SPACING = 150;
+    private static final float START_PADDING = 100;
 
     private static final Vector3f START_BUTTON_LOCATION = new Vector3f(0, 5,
             -12);
@@ -45,6 +50,7 @@ public class StartScreenState extends AbstractAppState {
     private final ViewPort viewPort;
     private final AppSettings settings;
 
+    private Label startTitleLabel;
     private Label startLabel;
     private Label startButtonLabel;
 
@@ -63,6 +69,7 @@ public class StartScreenState extends AbstractAppState {
 
         viewPort.setBackgroundColor(BACKGROUND_COLOR);
         initStartScreen();
+        screen.addElement(startTitleLabel);
         screen.addElement(startLabel);
         screen.addElement(startButtonLabel);
         initStartButton();
@@ -72,20 +79,39 @@ public class StartScreenState extends AbstractAppState {
     public void cleanup() {
         super.cleanup();
 
+        screen.removeElement(startTitleLabel);
         screen.removeElement(startLabel);
         screen.removeElement(startButtonLabel);
     }
 
     private void initStartScreen() {
-        startLabel = new Label(screen, "Score Label", Vector2f.ZERO,
-                new Vector2f(settings.getWidth(), settings.getHeight() / 2));
+        startTitleLabel = new Label(screen, "Score Title Label", Vector2f.ZERO,
+                new Vector2f(settings.getWidth(), START_TITLE_SPACING));
+        startTitleLabel.setFont("Interface/Fonts/text.fnt");
+        startTitleLabel.setFontSize(START_TITLE_FONT_SIZE);
+        startTitleLabel.setFontColor(START_TITLE_COLOR);
+        startTitleLabel.setTextAlign(Align.Center);
+        startTitleLabel.setTextVAlign(VAlign.Center);
+        startTitleLabel.setTextWrap(LineWrapMode.Word);
+        startTitleLabel.setText("HOW TO PLAY");
+
+        startLabel = new Label(screen, "Score Label", new Vector2f(
+                START_PADDING, START_TITLE_SPACING), new Vector2f(
+                settings.getWidth() - 2 * START_PADDING, settings.getHeight()
+                        / 2 - START_TITLE_SPACING));
         startLabel.setFont("Interface/Fonts/text.fnt");
         startLabel.setFontSize(START_FONT_SIZE);
         startLabel.setFontColor(START_COLOR);
-        startLabel.setTextAlign(Align.Center);
+        startLabel.setTextAlign(Align.Left);
         startLabel.setTextVAlign(VAlign.Center);
         startLabel.setTextWrap(LineWrapMode.Word);
-        startLabel.setText("Learn how to play!.\nDon't let Katniss kill you.");
+        startLabel
+                .setText("Press A on the Wii Remote to recenter the crosshair.\n\n"
+                        + "To shoot:\n"
+                        + "1)  Press and hold a button on the Nunchuk.  The crosshair will turn blue.\n"
+                        + "2)  Quickly pull back the Nunchuk.\n"
+                        + "3)  When the crosshair turns green, release the button to fire.\n\n"
+                        + "Practice shooting on this screen.  Then shoot the start button to begin.");
 
         startButtonLabel = new Label(screen, "Start Button Label",
                 new Vector2f(0, settings.getHeight()

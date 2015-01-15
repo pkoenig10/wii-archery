@@ -107,7 +107,7 @@ public class GameController implements CoreButtonListener,
 
     @Override
     public void buttonPressed(NunchukButtonEvent evt) {
-        if (evt.isButtonZPressed()) {
+        if (evt.isButtonCPressed() || evt.isButtonZPressed()) {
             if (shootState == ShootState.NOT_SHOOTING) {
                 updateShootState(ShootState.LOADING);
                 lastLoadTime = System.currentTimeMillis();
