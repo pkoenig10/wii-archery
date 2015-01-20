@@ -9,6 +9,7 @@ import game.state.ScoreScreenState;
 import game.state.StartScreenState;
 import tonegod.gui.core.Screen;
 
+import com.jme3.app.FlyCamAppState;
 import com.jme3.app.SimpleApplication;
 import com.jme3.audio.AudioNode;
 import com.jme3.collision.CollisionResult;
@@ -104,6 +105,10 @@ public class Game extends SimpleApplication {
         screen = new Screen(this);
         guiNode.addControl(screen);
 
+        inputManager.setCursorVisible(false);
+        setDisplayFps(false);
+        setDisplayStatView(false);
+
         initCamera();
         initLight();
         initSound();
@@ -163,9 +168,8 @@ public class Game extends SimpleApplication {
     };
 
     private void initCamera() {
-        flyCam.setEnabled(false);
         cam.setLocation(new Vector3f(0, CAMERA_HEIGHT, 1));
-        inputManager.setCursorVisible(false);
+        stateManager.detach(stateManager.getState(FlyCamAppState.class));
     }
 
     private void initLight() {
@@ -187,7 +191,6 @@ public class Game extends SimpleApplication {
 
         hitSound = new AudioNode(assetManager, "Sounds/hit.wav");
         hitSound.setPositional(false);
-
     }
 
     private void initConstants() {

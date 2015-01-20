@@ -30,7 +30,6 @@ public class GameMoteFinder implements MoteFinderListener {
         try {
             long startTime = System.currentTimeMillis();
             while (System.currentTimeMillis() - startTime < FIND_MOTE_TIME) {
-                System.out.println("Starting disc");
                 finder.startDiscovery();
                 condition.await(15, TimeUnit.SECONDS);
                 finder.stopDiscovery();
