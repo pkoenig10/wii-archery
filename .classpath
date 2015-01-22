@@ -8,7 +8,13 @@
 	<classpathentry kind="lib" path="lib/motej.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.5.10.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-jdk14-1.5.10.jar"/>
-	<classpathentry kind="lib" path="lib/jME3/jMonkeyEngine3.jar"/>
+	<classpathentry kind="lib" path="lib/jME3/jinput.jar"/>
+	<classpathentry kind="lib" path="lib/jME3/jME3-core.jar"/>
+	<classpathentry kind="lib" path="lib/jME3/jME3-desktop.jar"/>
+	<classpathentry kind="lib" path="lib/jME3/jME3-effects.jar"/>
+	<classpathentry kind="lib" path="lib/jME3/jME3-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="lib/jME3/jME3-lwjgl.jar"/>
+	<classpathentry kind="lib" path="lib/jME3/lwjgl.jar"/>
 	<classpathentry kind="lib" path="lib/tonegod.gui.jar"/>
 	<classpathentry kind="output" path="bin"/>
 	<referencedentry kind="lib" path="lib/jME3/lib/jME3-core.jar" sourcepath="lib/jME3/source/com/jme3"/>
