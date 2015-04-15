@@ -53,7 +53,7 @@ public class Game extends SimpleApplication {
 
     private static final float ROOM_DEPTH = 100;
 
-    private static final int CROSSHAIR_SIZE = 100;
+    private static final int CROSSHAIR_SIZE = 120;
 
     private static final ColorRGBA LIGHT_COLOR = ColorRGBA.Cyan;
     private static final ColorRGBA LIGHT_GLOW_COLOR = ColorRGBA.Cyan.mult(0.9f);
@@ -106,8 +106,6 @@ public class Game extends SimpleApplication {
         guiNode.addControl(screen);
 
         inputManager.setCursorVisible(false);
-        setDisplayFps(false);
-        setDisplayStatView(false);
 
         initCamera();
         initLight();
@@ -157,6 +155,7 @@ public class Game extends SimpleApplication {
                     doStart();
                     break;
                 case START:
+                    showCrosshair();
                 case GAME:
                     shoot();
                     break;
@@ -214,7 +213,6 @@ public class Game extends SimpleApplication {
         floorTex.setWrap(WrapMode.Repeat);
         floorMat.setTexture("DiffuseMap", floorTex);
         floorMat.setBoolean("UseMaterialColors", true);
-
         floorMat.setColor("Ambient", ColorRGBA.DarkGray);
         floorMat.setColor("Diffuse", ColorRGBA.White);
         floorMat.setBoolean("VertexLighting", true);
@@ -356,6 +354,12 @@ public class Game extends SimpleApplication {
         debris.emitAllParticles();
     }
 
+    public void showCrosshair() {
+        if (state == State.START) {
+            guiNode.attachChild(crosshairNode);
+        }
+    }
+
     public void updateCrosshair(ShootState shootState) {
         switch (shootState) {
         case NOT_SHOOTING:
@@ -427,7 +431,6 @@ public class Game extends SimpleApplication {
 
     public void doStart() {
         roomNode.removeFromParent();
-        guiNode.attachChild(crosshairNode);
         stateManager.detach(moteFinderScreenState);
         stateManager.detach(scoreScreenState);
         stateManager.attach(startScreenState);
@@ -498,6 +501,8 @@ public class Game extends SimpleApplication {
 
         Game game = new Game();
         game.setSettings(settings);
+        game.setDisplayFps(false);
+        game.setDisplayStatView(false);
         game.start();
     }
 }

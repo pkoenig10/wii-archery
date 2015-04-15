@@ -73,6 +73,13 @@ public class GameController implements CoreButtonListener,
                 rollVal = 0;
                 pitchVal = 0;
             }
+            game.enqueue(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    game.showCrosshair();
+                    return null;
+                }
+            });
         } else {
             crosshairReset = false;
         }

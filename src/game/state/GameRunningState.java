@@ -76,7 +76,7 @@ public class GameRunningState extends AbstractAppState {
     private static final float TARGET_START_PADDING = 3;
     private static final float TARGET_END_PADDING = 4;
     private static final float TARGET_SIZE = 1.5f;
-    private static final float TARGET_SPEED = 20;
+    private static final float TARGET_SPEED = 25;
 
     private static final int GAME_TIME = 30;
     private static final float START_DELAY = 1;

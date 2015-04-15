@@ -225,7 +225,7 @@ public class ScoreScreenState extends AbstractAppState {
         percentTargetsHitTextLabel.setFontColor(STATS_COLOR);
         percentTargetsHitTextLabel.setTextAlign(Align.Right);
         percentTargetsHitTextLabel.setTextVAlign(VAlign.Center);
-        percentTargetsHitTextLabel.setText("% Targets Hit:");
+        percentTargetsHitTextLabel.setText("Targets Hit:");
 
         percentTargetsHitLabel = new Label(screen, "Hit Percentage Label",
                 new Vector2f(settings.getWidth() / 2 + STATS_SPACING_X,
@@ -272,7 +272,7 @@ public class ScoreScreenState extends AbstractAppState {
                 (int) (stats.getPercentTargetsHit() * 100)));
 
         int trainingScore = (int) Math.round(Math.pow(stats.getAccuracy()
-                * stats.getPercentTargetsHit(), 0.5) * 11 + 1);
+                * stats.getPercentTargetsHit(), 0.7) * 11 + 1);
         trainingScoreLabel.setText(String.format("%d", trainingScore));
     }
 }

@@ -126,6 +126,8 @@ public class MoteFinderScreenState extends AbstractAppState implements
     public void update(float tpf) {
         if (moteConnected && nunchukConnected && motionPlusConnected) {
             if (!fadeStarted) {
+                game.setController(new GameController(game, mote,
+                        motionPlusNunchuk));
                 screen.getEffectManager().applyBatchEffect(fadeEffect);
                 fadeStarted = true;
             } else {
@@ -226,6 +228,7 @@ public class MoteFinderScreenState extends AbstractAppState implements
                         mote.addExtensionListener(MoteFinderScreenState.this);
                         mote.addCoreButtonListener(MoteFinderScreenState.this);
                         mote.activateMotionPlusNunchuk();
+                        mote.setReportMode(ReportModeRequest.DATA_REPORT_0x32);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -260,8 +263,6 @@ public class MoteFinderScreenState extends AbstractAppState implements
             motionPlusNunchuk = (MotionPlusNunchuk) ext;
             motionPlusNunchuk.addMotionPlusEventListener(this);
             motionPlusNunchuk.addNunchukButtonListener(this);
-            mote.setReportMode(ReportModeRequest.DATA_REPORT_0x32);
-            game.setController(new GameController(game, mote, motionPlusNunchuk));
         }
     }
 
